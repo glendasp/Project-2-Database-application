@@ -10,8 +10,8 @@ def main_menu(client):
     menu_string = (
         '\n\t** MAIN MENU **\n'
         '\nClient: {} {}\n'
-        '\t1) Register for a appointment\n'
-        '\t2) Drop a appointment\n'
+        '\t1) Register for an appointment\n'
+        '\t2) Drop an appointment\n'
         '\t3) Display appointments\n'
         '\t4) Quit\n'
         '\nEnter Selection'
@@ -34,7 +34,7 @@ def add_appointment(client):
     menu_string = (
         '\nREGISTER AN APPOINTMENT\n'
         '\t1) By Appointment ID\n'
-        '\t2) Search for a Appointment by Name\n'
+        '\t2) Search for an appointment by Name\n'
         '\t3) Back\n'
         '\n-> Enter Selection'
     )
@@ -69,18 +69,19 @@ def delete_appointment(client):
         print(client.full_name + " does not have any appointment in the list yet")
         return
     else:
-        print("The current appointment list for " + client.full_name)
+        print('The current appointment list for ' + client.full_name)
         for appointment in client_appointment_list:
             print("\t{}.{} ".format(appointment.id, appointment.name))
     while True:
         drop_question = '-> Enter appointment id to drop from the given appointment list'
         drop_appointment_id = get_user_int(drop_question)
-        Confirmation_Message = input("Do You want to drop " + db.get_appointment(drop_appointment_id).name + " from your appointment list(Y/N)?")
+        Confirmation_Message = input('Do You want to drop ' + db.get_appointment(drop_appointment_id).name + ' from your appointment list(Y/N)?')
         if str(Confirmation_Message).upper() == 'Y':
             client_appointment_idlist = [appointment.id for appointment in client_appointment_list]
             if drop_appointment_id in client_appointment_idlist:
                 db.drop_appointment(client.id, drop_appointment_id)
-                print(str(db.get_appointment(drop_appointment_id).name) + " has been dropped from your current appointment list")
+                print('\n -->'+ str(db.get_appointment(drop_appointment_id).name) + 'has been dropped from your current appointment list')
+                print('-------------------------------------------------------------------------------------------------------')
                 break
             else:
                 print('No appointment found with this ID in this list. Please try again')
@@ -96,9 +97,11 @@ def delete_appointment(client):
 def display_appointment(client):
     appointment_info = db.get_appointment_by_client_id(client.id)
     if len(appointment_info) == 0:
-        print(client.full_name + " does not have any appointment in the list yet")
+        print(client.full_name + ' does not have any appointment in the list yet')
     else:
-        print("Appointment list for client name: " + client.full_name)
+
+        print('\n -->Appointment list for client name: ' + client.full_name)
+        print('------------------------------------------------------------------------------')
         for appointment in appointment_info:
             print("\t{} ({})".format(appointment.name, appointment.professional.full_name))
 
@@ -112,7 +115,7 @@ def search_appointment(client):
         return
     while True:
         appointment_count = len(appointments)
-        menu_string = '\nSelect a appointment\n'
+        menu_string = '\nSelect an appointment\n'
         for n, appointment in enumerate(appointments):
             menu_string += '\t{}) {}\n'.format(n + 1, appointment.name)
         menu_string += '\t{}) Back\n'.format(appointment_count + 1)
